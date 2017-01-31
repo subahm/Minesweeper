@@ -30,14 +30,14 @@ public class Minesweeper{
 	public void placeBombs(){
 		char[][] bombs = new char[row][col+1];
 		int i;						          
-		for (i = 0; i < boom; i++){ 						    	//Loop to keep a count of bombs placed
-            int ROW = (int)(Math.random() * ((row-1) - 0) + 0); 	//Getting a random row
-            int COL = (int)(Math.random() * (col - 1) + 1); 		//Getting a random column
-            if(bombs[ROW][COL] == null){ 							//Checking if the cells is empty
-            	bombs[ROW][COL] = 'X'; 								//Then place a bomb
+		for (i = 0; i < boom; i++){ 						    //Loop to keep a count of bombs placed
+            int ROW = (int)(Math.random() * ((row-1) - 0) + 0); //Getting a random row
+            int COL = (int)(Math.random() * (col - 1) + 1); 	//Getting a random column
+            if(bombs[ROW][COL] == null){ 						//Checking if the cells is empty
+            	bombs[ROW][COL] = 'X'; 							//Then place a bomb
             }
             else{
-            	i--; 												//Else look for another cell, without increasing the number of bombs placed
+            	i--; 											//Else look for another cell, without increasing the number of bombs placed
             }
         }
     }

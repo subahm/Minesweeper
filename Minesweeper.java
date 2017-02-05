@@ -1,4 +1,3 @@
-
 // FIX LINE 55 AND 36
 
 
@@ -31,19 +30,14 @@ public class Minesweeper{
 	public static void placeBombs(){
 		String[][] bombs = new String[row][col+1];
 		int i;						          
-		for (i = 0; i < boom; i++){ 			//Loop to keep a count of bombs placed
+		for (i = 0; i < boom; i++){ 						    //Loop to keep a count of bombs placed
             int ROW = (int)(Math.random() * ((row-1) - 0) + 0); //Getting a random row
             int COL = (int)(Math.random() * (col - 1) + 1); 	//Getting a random column
-<<<<<<< HEAD
             if(bombs[ROW][COL] == null){ 						//Checking if the cells is empty
             	bombs[ROW][COL] = "X"; 						//Then place a bomb
-=======
-            if(bombs[ROW][COL] == null){ 			//Checking if the cells is empty
-            	bombs[ROW][COL] = 'X'; 				//Then place a bomb
->>>>>>> 9408f4860b7db6d89e4591a4d85ea76740740c0a
             }
             else{
-            	i--; 						//Else look for another cell, without increasing the number of bombs placed
+            	i--; 											//Else look for another cell, without increasing the number of bombs placed
             }
         }
     }

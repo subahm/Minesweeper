@@ -3,6 +3,7 @@
 
 import java.util.Scanner;
 import java.io.*;
+import java.util.Random;
 //import static java.util.Arrays.*;
 
 public class Minesweeper{
@@ -16,7 +17,7 @@ public class Minesweeper{
 	
 	
 	//A function asking user to input the details of the screen
-	/*public void userInput(){
+	public static void userInput(){
 		Scanner input = new Scanner(System.in);
 		System.out.println("Enter the number of rows");
 		row = input.nextInt();
@@ -24,15 +25,15 @@ public class Minesweeper{
 		col = input.nextInt();
 		System.out.println("Set the number of bombs");
 		boom = input.nextInt();
-	}*/
+	}
 	
 	//A function to place the bombs randomly
-	public static void placeBombs(){
+	/*public static void placeBombs(){
 		String[][] bombs = new String[row][col+1];
 		int i;						          
 		for (i = 0; i < boom; i++){ 						    //Loop to keep a count of bombs placed
-            int ROW = (int)(Math.random() * ((row-1) - 0) + 0); //Getting a random row
-            int COL = (int)(Math.random() * (col - 1) + 1); 	//Getting a random column
+            int ROW = (int)(Math.random() * ((row) - 0) + 0); //Getting a random row
+            int COL = (int)(Math.random() * (col) + 1); 	//Getting a random column
             if(bombs[ROW][COL] == null){ 						//Checking if the cells is empty
             	bombs[ROW][COL] = "X"; 						//Then place a bomb
             }
@@ -40,22 +41,82 @@ public class Minesweeper{
             	i--; 											//Else look for another cell, without increasing the number of bombs placed
             }
         }
-    }
+        printCells(bombs);
+    }*/
 	
 	//A function to ask the user to select a cell
-	public String cellInput(){
-		Scanner input = new Scanner(System.in);
+	public static String cellInput(){
+		Scanner in = new Scanner(System.in);
 		System.out.println("Select a cell by entering row and column");
 		int selectedRow = 0; 
 		int selectedCol = 0;
-		selectedRow = input.nextInt();
-		selectedCol = input.nextInt();
+		selectedRow = in.nextInt();
+		selectedRow = selectedRow - 1;
+		System.out.println("Printing row: "+selectedRow);
 		String a = ""+selectedRow;
-		String b = ""+selectedCol;
+		if((selectedRow-1) > row){
+			System.out.println("WRONG");
+			return "";
+		}
+		selectedCol = in.nextInt();
+ 		String b = ""+selectedCol;
+ 		if(selectedCol > col){
+			System.out.println("WRONG");
+			return "";
+		}
 		String c = a + b;
+		System.out.println(c);
 		return c;
 	}
 	
+	
+	public static void checkMine(String screen[][], String bombs[][], String cell){
+		int CELL = Integer.parseInt(cell);
+		int r = CELL/10;
+		int c = CELL%10;
+		System.out.println("Printing cell: "+bombs[r][c]);
+		if(bombs[r][c] != null){
+			System.out.println("Fucked");
+		}
+		else{
+			System.out.println("Nice");
+			screen[r][c] = minesNear(bombs, r, c);
+		}
+	}
+	
+	public static char minesNear(String bombs[][], int r, int c){
+		int mines = 0;
+    	// check mines in all directions
+    	mines += mineAt(bombs, r - 1, c - 1);  // NW
+    	mines += mineAt(bombs, r - 1, c);      // N
+    	mines += mineAt(bombs, r - 1, c + 1);  // NE
+    	mines += mineAt(bombs, r, c - 1);      // W
+    	mines += mineAt(bombs, r, c + 1);      // E
+    	mines += mineAt(bombs, r + 1, c - 1);  // SW
+    	mines += mineAt(bombs, r + 1, c);      // S
+    	mines += mineAt(bombs, r + 1, c + 1);  // SE
+    	if(mines > 0) {
+      	// we're changing an int to a char
+      	// why?!
+      	// http://www.asciitable.com/
+      	// 48 is ASCII code for '0'
+      	return (char)(mines + 48);
+    	} else {
+      	return ' ';
+    	}
+	}
+	
+	
+	public static int mineAt(String bombs[][], int r, int c) {
+    // we need to check also that we're not out of array bounds as that would
+    // be an error
+    if(bombs[r][c].equals('X')) {
+      return 1;
+    } 
+    else {
+      return 0;
+    }
+  }
 	
 	//A function to print the cells 
 	public static void printCells(String screen[][]){
@@ -98,14 +159,14 @@ public class Minesweeper{
 		//Printing the first row of numbers starting from 0
 		int a,b;
 		System.out.print(" ");
-		for(a=0; a<col; a++){
+		for(a=1; a<=col; a++){
 			System.out.print(" "+a);
 		}
 		System.out.println();
 		
 		//Filling the screen array with '.', where the first column is filled with numbers starting from 0
 		int i,j;
-		char c = '0';
+		char c = '1';
 		for(i=0; i<row; i++){
 			for(j=0; j<col+1; j++){
 				if(j == 0){
@@ -117,10 +178,29 @@ public class Minesweeper{
 			}
 		}
 		
+		Random rand = new Random();
+		String[][] bombs = new String[row][col+1];
+		int ii;						          
+		for (ii = 1; ii <= boom; ii++){ 						    //Loop to keep a count of bombs placed
+            //int ROW = (int)(Math.random() * ((row) - 0) + 0); //Getting a random row
+            //int COL = (int)(Math.random() * ((col) - 0) + 0); 	//Getting a random column
+            int ROW = rand.nextInt(row) + 0;
+            int COL = rand.nextInt(col) + 1;
+            if(bombs[ROW][COL] == null){ 						//Checking if the cells is empty
+            	bombs[ROW][COL] = "X";						//Then place a bomb
+            }
+            else{
+            	ii--; 											//Else look for another cell, without increasing the number of bombs placed
+            }
+        }
+        
+        
 		printCells(screen);
-		placeBombs();
-
-		
+		printCells(bombs);
+		//placeBombs();
+		//String yo = cellInput();
+		//System.out.println(yo);
+		checkMine(screen, bombs, cellInput());
 
         
 		

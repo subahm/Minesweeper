@@ -1,6 +1,4 @@
 // FIX LINE 55 AND 36
-
-
 import java.util.Scanner;
 import java.io.*;
 import java.util.Random;
@@ -14,7 +12,7 @@ public class Minesweeper{
 	public static int boom = 0;
 	boolean win = false;
 	boolean loose = false;
-	
+	public static String bombs[][];
 	
 	//A function asking user to input the details of the screen
 	public static void userInput(){
@@ -84,7 +82,7 @@ public class Minesweeper{
 		}
 	}
 	
-	public static char minesNear(String bombs[][], int r, int c){
+	public static String minesNear(String bombs[][], int r, int c){
 		int mines = 0;
     	// check mines in all directions
     	mines += mineAt(bombs, r - 1, c - 1);  // NW
@@ -96,13 +94,14 @@ public class Minesweeper{
     	mines += mineAt(bombs, r + 1, c);      // S
     	mines += mineAt(bombs, r + 1, c + 1);  // SE
     	if(mines > 0) {
+	String mines2 = ""+(mines+48);
       	// we're changing an int to a char
       	// why?!
       	// http://www.asciitable.com/
       	// 48 is ASCII code for '0'
-      	return (char)(mines + 48);
+      	return mines2;
     	} else {
-      	return ' ';
+      	return " ";
     	}
 	}
 	
@@ -179,7 +178,7 @@ public class Minesweeper{
 		}
 		
 		Random rand = new Random();
-		String[][] bombs = new String[row][col+1];
+		bombs = new String[row][col+1];
 		int ii;						          
 		for (ii = 1; ii <= boom; ii++){ 						    //Loop to keep a count of bombs placed
             //int ROW = (int)(Math.random() * ((row) - 0) + 0); //Getting a random row

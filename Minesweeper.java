@@ -1,4 +1,5 @@
 // FIX LINE 55 AND 36
+//Try using graph algorithms
 import java.util.Scanner;
 import java.io.*;
 import java.util.Random;

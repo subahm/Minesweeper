@@ -75,7 +75,7 @@ public class Minesweeper{
 		int c = CELL%10;
 		System.out.println("Printing cell: "+bombs[r][c]);
 		if(bombs[r][c] != null){
-			System.out.println("Fucked");
+			System.out.println("Boom");
 		}
 		else{
 			System.out.println("Nice");

@@ -40,6 +40,21 @@ public class Minesweeper{
         }
         printCells(bombs);
     }*/
+    
+    
+    
+    public static void lost(String screen[][], String bombs[][]){
+    	for(int i=0; i<bombs.length; i++){
+    		for(int j=0; j<bombs[0].length; j++){
+    			if(bombs[i][j] != null){
+    				screen[i][j] = "X";
+    			}
+    		}
+    	}
+    	System.out.println("You loose!");
+    	printCells(screen);
+    	System.exit(0);
+    }
 	
 	//A function to ask the user to select a cell
 	public static String cellInput(){
@@ -73,9 +88,11 @@ public class Minesweeper{
 		int c = CELL%10;
 		boolean flag = true;
 		System.out.println("Printing cell: "+bombs[r][c]);
-		if(bombs[r][c] != null){
+		if(bombs[r][c] != null && bombs[r][c] != " "){
+			/*screen[r][c] = "X";
 			printCells(screen);
-			return "You lose!";
+			return "You lose!";*/
+			lost(screen, bombs);
 		}
 		for(int i=0; i<bombs.length-1; i++){
 			for(int j=1; j<bombs[0].length-1; j++){
@@ -156,22 +173,27 @@ public class Minesweeper{
 	public static int mineAt(String bombs[][], int r, int c) {
     // we need to check also that we're not out of array bounds as that would
     // be an error
-    int a = 0;
 	if(bombs[r][c]==null){
-    	a = 0;
+    	return 0;
     }
-    else if(bombs[r][c].equals('X')) {
-      a = 1;
+    System.out.println("r= " + r + ", c= " + c);
+    return 1;
     }
-    return a;
-    }
+	
+	
 	
 	//A function to print the cells 
 	public static void printCells(String screen[][]){
 		int k,l;
+		int size = screen[0].length;
+		for(int m=1; m<=size-1; m++){
+			System.out.print(" ");
+			System.out.print("\t" + m);
+		}
+		System.out.print("\n");
 		for(k=0; k<row; k++){
 			for(l=0; l<col+1; l++){
-				System.out.print(screen[k][l]+" ");
+				System.out.print(screen[k][l]+"\t");
 			}
 			System.out.println();
 		}
